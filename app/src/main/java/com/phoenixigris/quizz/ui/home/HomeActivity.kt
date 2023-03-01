@@ -29,7 +29,6 @@ class HomeActivity : AppCompatActivity() {
         viewModel.getQuizStatus()
         observerQuizStatus()
         setProfile()
-        //  fetchQuestions()
         setContentView(binding.root)
     }
 
@@ -97,10 +96,6 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         startActivity(intent)
-    }
-
-    private fun fetchQuestions() {
-        viewModel.fetchQuestions()
     }
 
 

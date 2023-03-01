@@ -41,7 +41,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
     fun getRandomQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
             val json = store[randomQuestionKey]
-            Gson().fromJson(json, QuestionResponse::class.java)
+            Gson().fromJson(json, QuestionResponse::class.java) ?: QuestionResponse()
         }
     }
 
@@ -54,7 +54,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
     fun getLinuxQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
             val json = store[linuxQuestionKey]
-            Gson().fromJson(json, QuestionResponse::class.java)
+            Gson().fromJson(json, QuestionResponse::class.java) ?: QuestionResponse()
         }
     }
 
@@ -67,7 +67,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
     fun getDevOpsQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
             val json = store[devOpsQuestionKey]
-            Gson().fromJson(json, QuestionResponse::class.java)
+            Gson().fromJson(json, QuestionResponse::class.java) ?: QuestionResponse()
         }
     }
 
@@ -80,7 +80,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
     fun getDockerQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
             val json = store[dockerQuestionKey]
-            Gson().fromJson(json, QuestionResponse::class.java)
+            Gson().fromJson(json, QuestionResponse::class.java) ?: QuestionResponse()
         }
     }
 
@@ -93,7 +93,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
     fun getSqlQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
             val json = store[sqlQuestionKey]
-            Gson().fromJson(json, QuestionResponse::class.java)
+            Gson().fromJson(json, QuestionResponse::class.java) ?: QuestionResponse()
         }
     }
 
@@ -105,7 +105,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
     fun getCodeQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
             val json = store[codeQuestionKey]
-            Gson().fromJson(json, QuestionResponse::class.java)
+            Gson().fromJson(json, QuestionResponse::class.java) ?: QuestionResponse()
         }
     }
 
@@ -117,7 +117,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
     fun getCMSQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
             val json = store[cmsQuestionKey]
-            Gson().fromJson(json, QuestionResponse::class.java)
+            Gson().fromJson(json, QuestionResponse::class.java) ?: QuestionResponse()
         }
     }
 

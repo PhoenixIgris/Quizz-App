@@ -76,9 +76,18 @@ class QuizActivity : AppCompatActivity() {
     private fun observeQuestion(quizTypeEnum: QuizTypeEnum) {
         viewModel.getQuestionList(quizTypeEnum)
             .observe(this) {
-                questionList = it
-                currentQuesAnsSet = mutableStateOf(it[counter.value])
-                displayQuestionAnswer()
+                if (it.isNotEmpty()) {
+                    questionList = it
+                    currentQuesAnsSet = mutableStateOf(it[counter.value])
+                    displayQuestionAnswer()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Please Connect to Internet and Restart Again",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    this.finish()
+                }
             }
 
     }

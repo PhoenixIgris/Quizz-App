@@ -120,11 +120,11 @@ class QuizRepository @Inject constructor(
 
     fun getRandomQuestionList() = dataStoreHelper.getRandomQuestion()
     fun getLinuxQuestion() = dataStoreHelper.getLinuxQuestion()
-    fun getDevOpsQuestionList() = dataStoreHelper.getRandomQuestion()
-    fun getDockerQuestionList() = dataStoreHelper.getRandomQuestion()
-    fun getSqlQuestionList() = dataStoreHelper.getRandomQuestion()
-    fun getCodeQuestionList() = dataStoreHelper.getRandomQuestion()
-    fun getCmsQuestionList() = dataStoreHelper.getRandomQuestion()
+    fun getDevOpsQuestionList() = dataStoreHelper.getDevOpsQuestion()
+    fun getDockerQuestionList() = dataStoreHelper.getDockerQuestion()
+    fun getSqlQuestionList() = dataStoreHelper.getSqlQuestion()
+    fun getCodeQuestionList() = dataStoreHelper.getCodeQuestion()
+    fun getCmsQuestionList() = dataStoreHelper.getCMSQuestion()
 
     fun getQuizStatusList(): Flow<List<QuizModel>> {
         return dataStoreHelper.getQuizStatusList()
