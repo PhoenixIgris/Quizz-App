@@ -12,6 +12,7 @@ import com.phoenixigris.quizz.helpers.QuizLevelEnum
 import com.phoenixigris.quizz.helpers.QuizModel
 import com.phoenixigris.quizz.helpers.QuizStatus
 import com.phoenixigris.quizz.helpers.QuizTypeEnum
+import com.phoenixigris.quizz.ui.profile.ProfileActivity
 import com.phoenixigris.quizz.ui.quiz.QuizActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,8 +28,15 @@ class HomeActivity : AppCompatActivity() {
         binding = HomeLytBinding.inflate(layoutInflater)
         viewModel.getQuizStatus()
         observerQuizStatus()
-      //  fetchQuestions()
+        setProfile()
+        //  fetchQuestions()
         setContentView(binding.root)
+    }
+
+    private fun setProfile() {
+        binding.homeActProfileIV.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
     }
 
     private fun observerQuizStatus() {

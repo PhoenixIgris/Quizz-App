@@ -1,0 +1,20 @@
+<!--
+  ~ Created by Diken Mhrz
+  ~  Copyright (c) 2021 Sunya Health Solution Pvt. Ltd . All rights reserved.
+  ~  Last modified 11/8/21, 5:59 PM
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="45dp"
+    android:height="45dp"
+    android:viewportWidth="45"
+    android:viewportHeight="45">
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M22.5,44.5L22.5,44.5A22,22 0,0 1,0.5 22.5L0.5,22.5A22,22 0,0 1,22.5 0.5L22.5,0.5A22,22 0,0 1,44.5 22.5L44.5,22.5A22,22 0,0 1,22.5 44.5z"
+        android:strokeWidth="1"
+        android:strokeColor="#F5F5F4" />
+    <path
+        android:fillColor="#44403C"
+        android:pathData="M30.1492,23.3182L17.6506,23.3182L22.8961,28.7091L21.7708,29.8636L15.0366,22.9636C14.7885,22.7091 14.7885,22.3 15.0366,22.0455L21.7708,15.1364L22.8961,16.2909L17.6506,21.6818L30.1492,21.6818L30.1492,22.5L30.1492,23.3182Z" />
+</vector>
