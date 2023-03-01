@@ -17,36 +17,42 @@ interface QuizApi {
     @GET(ApiEndPoints.API_URL)
     suspend fun fetchLinuxQuestion(
         @Query("apiKey") apikey: String = Constants.AUTH_TOKEN,
-        @Query("category") category: String = Constants.LINUX
+        @Query("category") category: String = Constants.LINUX,
+        @Query("difficulty") difficulty: String = Constants.DIFFICULTY_EASY
     ): Response<QuestionResponse>
 
     @GET(ApiEndPoints.API_URL)
     suspend fun fetchDevOpsQuestion(
         @Query("apiKey") apikey: String = Constants.AUTH_TOKEN,
-        @Query("category") category: String = Constants.DEVOPS
+        @Query("category") category: String = Constants.DEVOPS,
+        @Query("difficulty") difficulty: String = Constants.DIFFICULTY_EASY
     ): Response<QuestionResponse>
 
     @GET("/api/v1/questions")
     suspend fun fetchDockerQuestion(
         @Query("apiKey") apikey: String = Constants.AUTH_TOKEN,
-        @Query("category") category: String = Constants.DOCKER
+        @Query("category") category: String = Constants.DOCKER,
+        @Query("difficulty") difficulty: String = Constants.DIFFICULTY_EASY
     ): Response<QuestionResponse>
 
     @GET(ApiEndPoints.API_URL)
     suspend fun fetchSQLQuestion(
         @Query("apiKey") apikey: String = Constants.AUTH_TOKEN,
-        @Query("category") category: String = Constants.SQL
+        @Query("category") category: String = Constants.SQL,
+        @Query("difficulty") difficulty: String = Constants.DIFFICULTY_EASY
     ): Response<QuestionResponse>
 
     @GET(ApiEndPoints.API_URL)
     suspend fun fetchCodeQuestion(
         @Query("apiKey") apikey: String = Constants.AUTH_TOKEN,
-        @Query("category") category: String = Constants.CODE
+        @Query("category") category: String = Constants.CODE,
+        @Query("difficulty") difficulty: String = Constants.DIFFICULTY_EASY
     ): Response<QuestionResponse>
 
     @GET(ApiEndPoints.API_URL)
     suspend fun fetchCMSQuestion(
         @Query("apiKey") apikey: String = Constants.AUTH_TOKEN,
-        @Query("category") category: String = Constants.CMS
+        @Query("category") category: String = Constants.CMS,
+        @Query("difficulty") difficulty: String = Constants.DIFFICULTY_EASY
     ): Response<QuestionResponse>
 }

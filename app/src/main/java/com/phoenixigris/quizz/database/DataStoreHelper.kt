@@ -6,10 +6,14 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.phoenixigris.quizz.helpers.Constants
+import com.phoenixigris.quizz.helpers.HelperClass.getQuizCategoryList
+import com.phoenixigris.quizz.helpers.QuizModel
 import com.phoenixigris.quizz.network.reponse.QuestionResponse
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -28,7 +32,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
     private val sqlQuestionKey = stringPreferencesKey(Constants.SQL)
     private val codeQuestionKey = stringPreferencesKey(Constants.CODE)
     private val cmsQuestionKey = stringPreferencesKey(Constants.CMS)
-
+    private val quizStatusKey = stringPreferencesKey(Constants.QUIZ_STATUS)
     suspend fun setRandomQuestion(question: QuestionResponse) {
         val questionString = Gson().toJson(question)
         editStore(randomQuestionKey, questionString)
@@ -36,8 +40,8 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
 
     fun getRandomQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
-            val subscriptionJson = store[randomQuestionKey]
-            Gson().fromJson(subscriptionJson, QuestionResponse::class.java)
+            val json = store[randomQuestionKey]
+            Gson().fromJson(json, QuestionResponse::class.java)
         }
     }
 
@@ -49,8 +53,8 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
 
     fun getLinuxQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
-            val subscriptionJson = store[linuxQuestionKey]
-            Gson().fromJson(subscriptionJson, QuestionResponse::class.java)
+            val json = store[linuxQuestionKey]
+            Gson().fromJson(json, QuestionResponse::class.java)
         }
     }
 
@@ -62,8 +66,8 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
 
     fun getDevOpsQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
-            val subscriptionJson = store[devOpsQuestionKey]
-            Gson().fromJson(subscriptionJson, QuestionResponse::class.java)
+            val json = store[devOpsQuestionKey]
+            Gson().fromJson(json, QuestionResponse::class.java)
         }
     }
 
@@ -75,8 +79,8 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
 
     fun getDockerQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
-            val subscriptionJson = store[dockerQuestionKey]
-            Gson().fromJson(subscriptionJson, QuestionResponse::class.java)
+            val json = store[dockerQuestionKey]
+            Gson().fromJson(json, QuestionResponse::class.java)
         }
     }
 
@@ -88,8 +92,8 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
 
     fun getSqlQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
-            val subscriptionJson = store[sqlQuestionKey]
-            Gson().fromJson(subscriptionJson, QuestionResponse::class.java)
+            val json = store[sqlQuestionKey]
+            Gson().fromJson(json, QuestionResponse::class.java)
         }
     }
 
@@ -100,8 +104,8 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
 
     fun getCodeQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
-            val subscriptionJson = store[codeQuestionKey]
-            Gson().fromJson(subscriptionJson, QuestionResponse::class.java)
+            val json = store[codeQuestionKey]
+            Gson().fromJson(json, QuestionResponse::class.java)
         }
     }
 
@@ -112,15 +116,30 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
 
     fun getCMSQuestion(): Flow<QuestionResponse> {
         return dataStore.data.map { store ->
-            val subscriptionJson = store[cmsQuestionKey]
-            Gson().fromJson(subscriptionJson, QuestionResponse::class.java)
+            val json = store[cmsQuestionKey]
+            Gson().fromJson(json, QuestionResponse::class.java)
         }
     }
 
+    suspend fun setQuizStatusList(quizStatus: List<QuizModel>) {
+        val quizStatusList = Gson().toJson(quizStatus)
+        editStore(quizStatusKey, quizStatusList)
+    }
+
+    fun getQuizStatusList(): Flow<List<QuizModel>> {
+        return dataStore.data.map { store ->
+            Gson().fromJson(
+                store[quizStatusKey],
+                object : TypeToken<List<QuizModel>>() {}.type
+            ) ?: getQuizCategoryList()
+        }
+    }
 
     private suspend fun <T> editStore(key: Preferences.Key<T>, value: T) {
         dataStore.edit { store ->
             store[key] = value
         }
     }
+
+
 }

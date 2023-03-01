@@ -7,10 +7,9 @@
     android:padding="20dp"
     tools:context=".ui.home.HomeActivity">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:src="@drawable/ic_user"
         app:layout_constraintBottom_toBottomOf="@+id/home_heading_tv"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,8 +22,10 @@
         android:id="@+id/home_heading_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:includeFontPadding="false"
         android:text="Let's Play"
-        android:textColor="#E2697E"
+        android:textColor="#EC687F"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,18 +38,25 @@
         android:layout_marginTop="5dp"
         android:fontFamily="@font/nunito"
         android:text="Be the first!"
-        android:textColor="#858282"
-        android:textSize="14sp"
+        android:textColor="@color/gray_400"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_heading_tv" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_height="0dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_sub_heading_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/home_sub_heading_tv">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_lyt_recycleV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           />
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

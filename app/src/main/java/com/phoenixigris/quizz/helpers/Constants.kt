@@ -10,5 +10,11 @@ object Constants {
     const val SQL = "SQL"
     const val CODE = "CODE"
     const val CMS = "CMS"
+    const val QUIZ_STATUS = "Quiz Status"
+    const val DIFFICULTY_EASY = "Easy"
+    const val DIFFICULTY_MEDIUM = "Medium"
+    const val DIFFICULTY_HARD = "Hard"
+
+    const val QUIZ_TYPE ="Quiz Type"
 
 }

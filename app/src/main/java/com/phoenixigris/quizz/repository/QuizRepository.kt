@@ -2,10 +2,14 @@ package com.phoenixigris.quizz.repository
 
 import android.util.Log
 import com.phoenixigris.quizz.database.DataStoreHelper
+import com.phoenixigris.quizz.helpers.QuizModel
 import com.phoenixigris.quizz.network.apiservices.QuizApi
 import com.phoenixigris.quizz.network.reponse.QuestionResponse
+import com.phoenixigris.quizz.network.reponse.QuestionResponseItem
 import com.phoenixigris.quizz.network.safeapicall.Resource
 import com.phoenixigris.quizz.network.safeapicall.SafeApiCall
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 private const val TAG = "QuizRepository"
@@ -46,7 +50,7 @@ class QuizRepository @Inject constructor(
     }
 
     suspend fun fetchDevOpsQuestions(): Resource<QuestionResponse> {
-        val response = SafeApiCall.execute { quizApi.fetchRandomQuestion() }
+        val response = SafeApiCall.execute { quizApi.fetchDevOpsQuestion() }
         when (response) {
             is Resource.Success -> {
                 Log.e(TAG, "fetchLinuxQuestions: ${response.value}")
@@ -61,7 +65,7 @@ class QuizRepository @Inject constructor(
     }
 
     suspend fun fetchDockerQuestions(): Resource<QuestionResponse> {
-        val response = SafeApiCall.execute { quizApi.fetchRandomQuestion() }
+        val response = SafeApiCall.execute { quizApi.fetchDockerQuestion() }
         when (response) {
             is Resource.Success -> {
                 Log.e(TAG, "fetchLinuxQuestions: ${response.value}")
@@ -89,7 +93,7 @@ class QuizRepository @Inject constructor(
     }
 
     suspend fun fetchCodeQuestions(): Resource<QuestionResponse> {
-        val response = SafeApiCall.execute { quizApi.fetchRandomQuestion() }
+        val response = SafeApiCall.execute { quizApi.fetchCodeQuestion() }
         when (response) {
             is Resource.Success -> {
                 dataStoreHelper.setCodeQuestion(response.value)
@@ -102,7 +106,7 @@ class QuizRepository @Inject constructor(
     }
 
     suspend fun fetchCMSQuestions(): Resource<QuestionResponse> {
-        val response = SafeApiCall.execute { quizApi.fetchRandomQuestion() }
+        val response = SafeApiCall.execute { quizApi.fetchCMSQuestion() }
         when (response) {
             is Resource.Success -> {
                 dataStoreHelper.setCMSQuestion(response.value)
@@ -113,4 +117,23 @@ class QuizRepository @Inject constructor(
         }
         return response
     }
+
+    fun getRandomQuestionList() = dataStoreHelper.getRandomQuestion()
+    fun getLinuxQuestion() = dataStoreHelper.getLinuxQuestion()
+    fun getDevOpsQuestionList() = dataStoreHelper.getRandomQuestion()
+    fun getDockerQuestionList() = dataStoreHelper.getRandomQuestion()
+    fun getSqlQuestionList() = dataStoreHelper.getRandomQuestion()
+    fun getCodeQuestionList() = dataStoreHelper.getRandomQuestion()
+    fun getCmsQuestionList() = dataStoreHelper.getRandomQuestion()
+
+    fun getQuizStatusList(): Flow<List<QuizModel>> {
+        return dataStoreHelper.getQuizStatusList()
+    }
+
+    suspend fun setQuizStatusList(list: List<QuizModel>) {
+        dataStoreHelper.setQuizStatusList(list)
+    }
+
+
+
 }
