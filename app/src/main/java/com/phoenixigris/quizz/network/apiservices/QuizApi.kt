@@ -1,10 +1,9 @@
 package com.phoenixigris.quizz.network.apiservices
 
-import com.phoenixigris.quizz.helpers.Constants
+import com.phoenixigris.quizz.utils.Constants
 import com.phoenixigris.quizz.network.reponse.QuestionResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface QuizApi {

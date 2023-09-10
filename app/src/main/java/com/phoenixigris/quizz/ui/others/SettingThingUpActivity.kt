@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.phoenixigris.quizz.databinding.ActivitySettingThingUpBinding
 import com.phoenixigris.quizz.ui.home.HomeActivity
+import com.phoenixigris.quizz.ui.login.ui.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,7 +27,7 @@ class SettingThingUpActivity : AppCompatActivity() {
     private fun observeFetchingFinishedOrNot() {
         viewModel.fetchCompleteLiveData.observe(this) { fetchComplete ->
             if (fetchComplete) {
-                startActivityFinishingCurrentOne(HomeActivity::class.java)
+                startActivityFinishingCurrentOne(LoginActivity::class.java)
             }
         }
     }

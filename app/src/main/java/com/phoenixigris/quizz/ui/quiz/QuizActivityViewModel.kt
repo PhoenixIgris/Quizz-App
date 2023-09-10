@@ -1,9 +1,9 @@
 package com.phoenixigris.quizz.ui.quiz
 
 import androidx.lifecycle.*
-import com.phoenixigris.quizz.helpers.QuizModel
-import com.phoenixigris.quizz.helpers.QuizTypeEnum
-import com.phoenixigris.quizz.helpers.Score
+import com.phoenixigris.quizz.utils.QuizModel
+import com.phoenixigris.quizz.utils.QuizTypeEnum
+import com.phoenixigris.quizz.utils.Score
 import com.phoenixigris.quizz.network.reponse.QuestionResponseItem
 import com.phoenixigris.quizz.repository.QuizRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

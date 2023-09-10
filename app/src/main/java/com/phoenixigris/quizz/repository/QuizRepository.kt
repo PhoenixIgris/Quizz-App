@@ -2,14 +2,12 @@ package com.phoenixigris.quizz.repository
 
 import android.util.Log
 import com.phoenixigris.quizz.database.DataStoreHelper
-import com.phoenixigris.quizz.helpers.QuizModel
+import com.phoenixigris.quizz.utils.QuizModel
 import com.phoenixigris.quizz.network.apiservices.QuizApi
 import com.phoenixigris.quizz.network.reponse.QuestionResponse
-import com.phoenixigris.quizz.network.reponse.QuestionResponseItem
 import com.phoenixigris.quizz.network.safeapicall.Resource
 import com.phoenixigris.quizz.network.safeapicall.SafeApiCall
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 private const val TAG = "QuizRepository"
@@ -133,7 +131,6 @@ class QuizRepository @Inject constructor(
     suspend fun setQuizStatusList(list: List<QuizModel>) {
         dataStoreHelper.setQuizStatusList(list)
     }
-
 
 
 }

@@ -1,7 +1,7 @@
 package com.phoenixigris.quizz.di
 
 import com.phoenixigris.quizz.BuildConfig
-import com.phoenixigris.quizz.helpers.Constants
+import com.phoenixigris.quizz.utils.Constants
 import com.phoenixigris.quizz.network.apiservices.QuizApi
 import dagger.Module
 import dagger.Provides

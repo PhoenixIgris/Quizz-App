@@ -55,7 +55,7 @@
                 android:id="@+id/textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/sofia_pro_bold"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center_horizontal"
                 android:text="0/8"
                 android:visibility="gone"

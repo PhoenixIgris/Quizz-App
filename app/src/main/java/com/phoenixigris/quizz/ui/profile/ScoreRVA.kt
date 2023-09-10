@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.phoenixigris.quizz.databinding.ScoreCardBinding
-import com.phoenixigris.quizz.helpers.QuizModel
+import com.phoenixigris.quizz.utils.QuizModel
 
 class ScoreRVA(private val mList: List<QuizModel>) :
     RecyclerView.Adapter<ScoreRVA.Holder>() {

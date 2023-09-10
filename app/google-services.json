@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "683643939099",
+    "project_id": "quizz-8314f",
+    "storage_bucket": "quizz-8314f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683643939099:android:4ae47a5bf5dcd3ff37cbbe",
+        "android_client_info": {
+          "package_name": "com.phoenixigris.quizz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683643939099-5lqbobc3nv3jovjkrhd7pb8fgeu8mv8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN1fXHqaJbcedEhWITGwbNxiesgW89x0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683643939099-5lqbobc3nv3jovjkrhd7pb8fgeu8mv8u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

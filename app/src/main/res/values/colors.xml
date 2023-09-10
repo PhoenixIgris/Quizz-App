@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Primary Color -->
+    <color name="primary_color">#6656D8</color>
+
+    <!-- Complementary Color -->
+    <color name="complementary_color">#D85666</color>
+
+    <!-- Analogous Colors -->
+    <color name="analogous_color1">#6658D8</color>
+    <color name="analogous_color2">#5666D8</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_color1">#56D8A4</color>
+    <color name="accent_color2">#D8A456</color>
+
+    <!-- Neutrals -->
+    <color name="light_gray">#F5F5F5</color>
+    <color name="dark_gray">#333333</color>
+
+    <!-- Error and Warning Colors -->
+    <color name="error_color">#FF5733</color>
+    <color name="warning_color">#FFC300</color>
+
+    <!-- Text Colors -->
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#757575</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
@@ -13,17 +40,6 @@
     <color name="green100">#79f2c0</color>
     <color name="green75">#abf5d1</color>
     <color name="green50">#e3fcef</color>
-
-
-    //TemporaryColors
-    <color name="primaryColor">@color/green_600</color>
-    <color name="primaryLightColor">@color/green_500</color>
-    <color name="primaryDarkColor">@color/green_700</color>
-    <color name="secondaryColor">#2796b2</color>
-    <color name="secondaryLightColor">#65c7e4</color>
-    <color name="secondaryDarkColor">#006882</color>
-    <color name="primaryTextColor">#FFFFFF</color>
-    <color name="secondaryTextColor">#FFFFFF</color>
 
 
     <color name="amber_50">#FFFBEB</color>
@@ -242,5 +258,27 @@
     <color name="yellow_800">#854D0E</color>
     <color name="yellow_900">#713F12</color>
 
+    <!-- Primary Color Shades -->
+    <color name="primary_100">#EDE7F6</color>
+    <color name="primary_200">#D1C4E9</color>
+    <color name="primary_300">#B39DDB</color>
+    <color name="primary_400">#9575CD</color>
+    <color name="primary_500">#7E57C2</color>
+    <color name="primary_600">#673AB7</color>
+    <color name="primary_700">#5E35B1</color>
+    <color name="primary_800">#512DA8</color>
+    <color name="primary_900">#4527A0</color>
+    <color name="primary_A100">#B388FF</color>
+    <color name="primary_A200">#7C4DFF</color>
+    <color name="primary_A400">#651FFF</color>
+    <color name="primary_A700">#6200EA</color>
+
+    <!-- Lighter Shade -->
+    <color name="primary_lighter">#AA88FF</color>
+
+    <!-- Darker Shade -->
+    <color name="primary_darker">#6133A0</color>
+
+    <color name="text_input_background">#F1F1F1</color>
 
 </resources>

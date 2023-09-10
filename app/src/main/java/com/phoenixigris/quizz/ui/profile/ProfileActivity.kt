@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.phoenixigris.quizz.database.DataStoreHelper
 import com.phoenixigris.quizz.databinding.ActivityProfileBinding
-import com.phoenixigris.quizz.helpers.HelperClass
+import com.phoenixigris.quizz.utils.HelperClass
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch

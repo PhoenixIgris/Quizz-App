@@ -36,9 +36,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.phoenixigris.quizz.R
 import com.phoenixigris.quizz.databinding.ActivityQuizBinding
-import com.phoenixigris.quizz.helpers.Constants.QUIZ_TYPE
-import com.phoenixigris.quizz.helpers.HelperClass.linearGradientDrawable
-import com.phoenixigris.quizz.helpers.QuizTypeEnum
+import com.phoenixigris.quizz.utils.Constants.QUIZ_TYPE
+import com.phoenixigris.quizz.utils.HelperClass.linearGradientDrawable
+import com.phoenixigris.quizz.utils.QuizTypeEnum
 import com.phoenixigris.quizz.network.reponse.Answers
 import com.phoenixigris.quizz.network.reponse.CorrectAnswers
 import com.phoenixigris.quizz.network.reponse.QuestionResponseItem

@@ -7,11 +7,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.phoenixigris.quizz.databinding.HomeLytBinding
-import com.phoenixigris.quizz.helpers.Constants.QUIZ_TYPE
-import com.phoenixigris.quizz.helpers.QuizLevelEnum
-import com.phoenixigris.quizz.helpers.QuizModel
-import com.phoenixigris.quizz.helpers.QuizStatus
-import com.phoenixigris.quizz.helpers.QuizTypeEnum
+import com.phoenixigris.quizz.utils.Constants.QUIZ_TYPE
+import com.phoenixigris.quizz.utils.QuizLevelEnum
+import com.phoenixigris.quizz.utils.QuizModel
+import com.phoenixigris.quizz.utils.QuizStatus
+import com.phoenixigris.quizz.utils.QuizTypeEnum
 import com.phoenixigris.quizz.ui.profile.ProfileActivity
 import com.phoenixigris.quizz.ui.quiz.QuizActivity
 import dagger.hilt.android.AndroidEntryPoint

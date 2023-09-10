@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.phoenixigris.quizz.R
 import com.phoenixigris.quizz.databinding.QuizCatCardBinding
-import com.phoenixigris.quizz.helpers.HelperClass
-import com.phoenixigris.quizz.helpers.QuizLevelEnum
-import com.phoenixigris.quizz.helpers.QuizModel
-import com.phoenixigris.quizz.helpers.QuizStatus
+import com.phoenixigris.quizz.utils.HelperClass
+import com.phoenixigris.quizz.utils.QuizLevelEnum
+import com.phoenixigris.quizz.utils.QuizModel
+import com.phoenixigris.quizz.utils.QuizStatus
 
 private const val TAG = "QuizCategoryRVA"
 
