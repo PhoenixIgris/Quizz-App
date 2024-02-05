@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="20dp"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="10dp">
+    android:layout_marginTop="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/primary_lighter"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,28 +17,22 @@
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="20dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_crown" />
-        </com.google.android.material.card.MaterialCardView>
+            android:layout_marginTop="10dp"
+            tools:progress="30" />
 
         <TextView
             android:id="@+id/score_value_Tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/semibold"
             android:includeFontPadding="false"
             android:textColor="@color/gray_700"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textSize="18sp"
             tools:text="18/20" />
 
         <TextView
@@ -44,10 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:fontFamily="@font/montserrat_bold"
             android:includeFontPadding="false"
             android:textColor="@color/gray_500"
-            android:textSize="18sp"
+            android:textSize="14sp"
             tools:text="Linux" />
     </LinearLayout>
 

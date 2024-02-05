@@ -15,6 +15,15 @@
         android:theme="@style/Theme.Quizz"
         tools:targetApi="31">
         <activity
+            android:name=".ui.addquiz.AddQuizActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.score.ScoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.register.ui.login.RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register" />
@@ -22,9 +31,6 @@
             android:name=".ui.login.ui.login.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.others.SplashActivity"
-            android:exported="true" />
         <activity
             android:name=".ui.others.SettingThingUpActivity"
             android:exported="true"
@@ -36,13 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.profile.ProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.quiz.QuizActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.home.HomeActivity"
             android:exported="true" />
     </application>
 

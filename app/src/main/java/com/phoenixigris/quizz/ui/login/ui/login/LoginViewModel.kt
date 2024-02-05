@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.phoenixigris.quizz.R
+import com.phoenixigris.quizz.repository.AuthCallback
 import com.phoenixigris.quizz.repository.UserRepository
 import com.phoenixigris.quizz.ui.login.data.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,16 +24,9 @@ class LoginViewModel @Inject constructor(private val loginRepository: UserReposi
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(email: String, password: String) {
+    fun login(email: String, password: String, callback: AuthCallback) {
         viewModelScope.launch {
-            val result = loginRepository.login(email, password)
-
-//            if (result is Result.Success) {
-//                _loginResult.value =
-//                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-//            } else {
-//                _loginResult.value = LoginResult(error = R.string.login_failed)
-//            }
+            loginRepository.login(email, password, callback)
         }
     }
 
@@ -58,5 +52,11 @@ class LoginViewModel @Inject constructor(private val loginRepository: UserReposi
 
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
+    }
+
+    fun setUserInfo() {
+        viewModelScope.launch {
+            loginRepository.setLoggedInUserInfo()
+        }
     }
 }

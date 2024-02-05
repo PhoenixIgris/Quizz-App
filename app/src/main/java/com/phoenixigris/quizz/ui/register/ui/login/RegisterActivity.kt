@@ -10,8 +10,10 @@ import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.phoenixigris.quizz.R
 import com.phoenixigris.quizz.databinding.ActivityRegisterBinding
+import com.phoenixigris.quizz.repository.AuthCallback
 import com.phoenixigris.quizz.ui.login.ui.login.LoggedInUserView
 import com.phoenixigris.quizz.ui.login.ui.login.LoginActivity
 import com.phoenixigris.quizz.utils.afterTextChanged
@@ -49,8 +51,6 @@ class RegisterActivity : AppCompatActivity() {
 
         registerViewModel.registerResult.observe(this, Observer {
             val registerResult = it ?: return@Observer
-
-            binding.loading.visibility = View.GONE
             if (registerResult.error != null) {
                 showregisterFailed(registerResult.error)
             }
@@ -88,7 +88,7 @@ class RegisterActivity : AppCompatActivity() {
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
-                        registerViewModel.register(
+                        register(
                             binding.username?.text.toString(),
                             binding.email?.text.toString(),
                             binding.password.text.toString()
@@ -98,8 +98,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
         binding.register?.setOnClickListener {
-            binding.loading.visibility = View.VISIBLE
-            registerViewModel.register(
+            register(
                 binding.username?.text.toString(),
                 binding.email?.text.toString(),
                 binding.password.text.toString()
@@ -109,6 +108,23 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
+    }
+
+    private fun register(username: String, email: String, password: String) {
+        binding.loading.visibility = View.VISIBLE
+        registerViewModel.register(username, email, password, object : AuthCallback {
+            override fun onSignUpSuccess() {
+                binding.loading.visibility = View.GONE
+                this@RegisterActivity.finish()
+                startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+            }
+
+            override fun onSignUpFailure(message: String) {
+                binding.loading.visibility = View.GONE
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {

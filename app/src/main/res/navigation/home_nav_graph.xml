@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.phoenixigris.quizz.ui.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/home_lyt"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.phoenixigris.quizz.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/leaderboard"
+        android:name="com.phoenixigris.quizz.ui.others.ComingSoonFragment"
+        android:label="fragment_coming_soon"
+        tools:layout="@layout/fragment_coming_soon" />
+    <fragment
+        android:id="@+id/quests"
+        android:name="com.phoenixigris.quizz.ui.others.ComingSoonFragment"
+        android:label="fragment_coming_soon"
+        tools:layout="@layout/fragment_coming_soon" />
+</navigation>

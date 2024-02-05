@@ -1,9 +1,13 @@
 package com.phoenixigris.quizz.network.apiservices
 
-import com.phoenixigris.quizz.utils.Constants
+import com.phoenixigris.quizz.network.reponse.QuestionAnswerListResponse
 import com.phoenixigris.quizz.network.reponse.QuestionResponse
+import com.phoenixigris.quizz.network.reponse.QuizCategoryModel
+import com.phoenixigris.quizz.utils.Constants
 import retrofit2.Response
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface QuizApi {
@@ -54,4 +58,21 @@ interface QuizApi {
         @Query("category") category: String = Constants.CMS,
         @Query("difficulty") difficulty: String = Constants.DIFFICULTY_EASY
     ): Response<QuestionResponse>
+
+
+    @GET(ApiEndPoints.CATEGORIES)
+    suspend fun fetchCategories(): Response<QuizCategoryModel>
+
+    @GET(ApiEndPoints.MAIN_URL)
+    suspend fun getTriviaQuestionsList(
+        @Query("amount") amount: Int? = 10,
+        @Query("category") categoryId: Int?,
+        @Query("difficulty") difficulty: String?,
+        @Query("type") type: String? = "multiple"
+    ): Response<QuestionAnswerListResponse>
+
+
+    @POST("api/login")
+    suspend fun login() : Response<Any>
+
 }

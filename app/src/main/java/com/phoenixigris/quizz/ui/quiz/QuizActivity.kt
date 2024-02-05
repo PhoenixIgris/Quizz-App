@@ -1,19 +1,30 @@
 package com.phoenixigris.quizz.ui.quiz
 
-import android.graphics.drawable.GradientDrawable
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.Window
+import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.RadioButton
-import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +33,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.colorResource
@@ -34,30 +44,35 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
+import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.phoenixigris.quizz.R
 import com.phoenixigris.quizz.databinding.ActivityQuizBinding
-import com.phoenixigris.quizz.utils.Constants.QUIZ_TYPE
-import com.phoenixigris.quizz.utils.HelperClass.linearGradientDrawable
-import com.phoenixigris.quizz.utils.QuizTypeEnum
-import com.phoenixigris.quizz.network.reponse.Answers
-import com.phoenixigris.quizz.network.reponse.CorrectAnswers
-import com.phoenixigris.quizz.network.reponse.QuestionResponseItem
+import com.phoenixigris.quizz.network.reponse.QuestionAnswerListResponse
+import com.phoenixigris.quizz.network.reponse.Result
+import com.phoenixigris.quizz.ui.MainActivity
+import com.phoenixigris.quizz.ui.home.model.QuizCategoryModel
 import com.phoenixigris.quizz.ui.quiz.ui.theme.QuizzTheme
+import com.phoenixigris.quizz.utils.IntentParams
+import com.phoenixigris.quizz.utils.IntentParams.TRIVIA_QUESTIONS
+import com.phoenixigris.quizz.utils.QuizLevelEnum
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.reflect.full.memberProperties
+
 
 private const val TAG = "QuizActivity"
 
 @AndroidEntryPoint
 class QuizActivity : AppCompatActivity() {
 
+    private var selectModeDialog: AlertDialog? = null
     private lateinit var binding: ActivityQuizBinding
     private val viewModel: QuizActivityViewModel by viewModels()
-    private lateinit var questionList: List<QuestionResponseItem>
-    private lateinit var currentQuesAnsSet: MutableState<QuestionResponseItem>
+    private lateinit var questionList: List<Result>
+    private lateinit var currentQuesAnsSet: MutableState<Result>
     private var counter: MutableState<Int> = mutableStateOf(0)
     private var currentScore: Int = 0
-    private lateinit var quizTypeEnum: QuizTypeEnum
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityQuizBinding.inflate(layoutInflater)
@@ -67,36 +82,22 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun initialize() {
-        quizTypeEnum = intent.getSerializableExtra(QUIZ_TYPE) as QuizTypeEnum
-        observeQuestion(quizTypeEnum)
-        setBackGround()
-    }
-
-
-    private fun observeQuestion(quizTypeEnum: QuizTypeEnum) {
-        viewModel.getQuestionList(quizTypeEnum)
-            .observe(this) {
-                if (it.isNotEmpty()) {
-                    questionList = it
-                    currentQuesAnsSet = mutableStateOf(it[counter.value])
-                    displayQuestionAnswer()
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Please Connect to Internet and Restart Again",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    this.finish()
-                }
-            }
-
-    }
-
-    private fun setBackGround() {
-        binding.root.background = linearGradientDrawable(
-            "#A3A5DA", "#FAF5FB", "#F7EAFD",
-            GradientDrawable.Orientation.BOTTOM_TOP
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
+        questionList = Gson().fromJson(
+            intent.getStringExtra(TRIVIA_QUESTIONS),
+            QuestionAnswerListResponse::class.java
+        ).results ?: emptyList()
+        if (questionList.isNotEmpty()) {
+            currentQuesAnsSet = mutableStateOf(questionList[counter.value])
+            binding.progressBar.progress = 0
+            displayQuestionAnswer()
+        } else {
+            Toast.makeText(this, "There was problem fetching questions", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 
     private fun displayQuestionAnswer() {
@@ -122,13 +123,17 @@ class QuizActivity : AppCompatActivity() {
             quesAnsConstrains(),
             modifier = Modifier.fillMaxWidth()
         ) {
+
+            Log.d(TAG, "SetView:  $currentQuesAnsSet")
             Text(
                 text = currentQuesAnsSet.value.question,
-                Modifier.layoutId("question"),
+                Modifier
+                    .layoutId("question")
+                    .wrapContentWidth(),
                 fontWeight = FontWeight.Bold,
-                fontSize = 28.sp,
+                fontSize = 18.sp,
                 textAlign = TextAlign.Left,
-                color = colorResource(id = R.color.gray_700),
+                color = colorResource(id = R.color.black),
                 letterSpacing = 0.5.sp
             )
             AddAnswerButtons()
@@ -160,127 +165,121 @@ class QuizActivity : AppCompatActivity() {
                 .fillMaxWidth()
                 .layoutId("AnswerBtn")
         ) {
-            val answerList = Answers::class.memberProperties
+            val answerList = mutableListOf<String>()
+            answerList.add(currentQuesAnsSet.value.correct_answer)
+            answerList.addAll(currentQuesAnsSet.value.incorrect_answers)
+            answerList.shuffle()
             val (selectedOption, onOptionSelected) = remember {
                 mutableStateOf(
-                    answerList.first().get(currentQuesAnsSet.value.answers)
+                    answerList.firstOrNull()
                 )
             }
             for (answers in answerList) {
-                currentQuesAnsSet.value.let { questionAnswerSet ->
-                    val answer = answers.get(questionAnswerSet.answers)
-                    if (answer != null) {
-                        Row(
-                            modifier = Modifier
-                                .selectable(
-                                    selected = (answer.toString() == selectedOption),
-                                    onClick = {
-                                        onOptionSelected(answer.toString())
-                                        addResult(answers.name)
-                                    }
-                                )
-                                .fillMaxWidth()
-                                .background(
-                                    Brush.horizontalGradient(
-                                        colors = listOf(
-                                            Color(0xFF8786EB),
-                                            Color(0xFFBE9CF3),
-                                            Color(0xFFE59FF1)
-                                        )
-                                    ),
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .padding(horizontal = 10.dp, vertical = 10.dp),
-                        ) {
-                            RadioButton(
-                                selected = (answer.toString() === selectedOption),
-                                onClick = { onOptionSelected(answer.toString()) },
-                                colors = RadioButtonDefaults.colors(
-                                    selectedColor = Color.White,
-                                    unselectedColor = Color.White,
-                                    disabledColor = Color.White
-                                )
+                currentQuesAnsSet.value.let {
+                    Row(
+                        modifier = Modifier
+                            .selectable(
+                                selected = (answers == selectedOption),
+                                onClick = {
+                                    onOptionSelected(answers)
+                                    addResult(answers)
+                                }
                             )
-                            Text(
-                                text = answer.toString(),
-                                fontSize = 18.sp,
-                                letterSpacing = 0.5.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                textAlign = TextAlign.Left,
-                                color = Color.White,
-                                modifier = Modifier.align(CenterVertically)
+                            .fillMaxWidth()
+                            .background(
+                                colorResource(id = R.color.white),
+                                shape = RoundedCornerShape(12.dp)
                             )
-                        }
-                        Spacer(modifier = Modifier.padding(bottom = 15.dp))
+                            .border(
+                                width = 2.dp, color = colorResource(
+                                    id = R.color.gray_100,
+                                ), shape = RoundedCornerShape(12.dp)
+                            )
+                            .padding(horizontal = 18.dp, vertical = 15.dp),
+                    ) {
+                        Text(
+                            text = answers,
+                            fontSize = 18.sp,
+                            letterSpacing = 0.5.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Left,
+                            color = Color.Black,
+                            modifier = Modifier.align(CenterVertically)
+                        )
                     }
+                    Spacer(modifier = Modifier.padding(bottom = 15.dp))
                 }
             }
         }
     }
 
     private fun addResult(answer: String) {
-        val correctAnswerList = CorrectAnswers::class.memberProperties
-        for (correctAnswer in correctAnswerList) {
-            val correctAnswerValue = correctAnswer.get(currentQuesAnsSet.value.correct_answers)
-            if (correctAnswerValue.toString() == "true") {
-                Log.e(TAG, "addResult: ${correctAnswer.name} $answer")
-                when (correctAnswer.name) {
-                    CorrectAnswers::answer_a_correct.name -> {
-                        if (answer == Answers::answer_a.name) {
-                            currentScore += 1
-                            break
-                        }
-                    }
-                    CorrectAnswers::answer_b_correct.name -> {
-                        if (answer == Answers::answer_b.name) {
-                            currentScore += 1
-                            break
-                        }
-                    }
-                    CorrectAnswers::answer_c_correct.name -> {
-                        if (answer == Answers::answer_c.name) {
-                            currentScore += 1
-                            break
-                        }
-                    }
-                    CorrectAnswers::answer_d_correct.name -> {
-                        if (answer == Answers::answer_d.name) {
-                            currentScore += 1
-                            break
-                        }
-                    }
-                    CorrectAnswers::answer_e_correct.name -> {
-                        if (answer == Answers::answer_e.name) {
-                            currentScore += 1
-                            break
-                        }
-                    }
-                    CorrectAnswers::answer_f_correct.name -> {
-                        if (answer == Answers::answer_f.name) {
-                            currentScore += 1
-                            break
-                        }
-                    }
-                }
-            }
+        if (currentQuesAnsSet.value.correct_answer == answer) {
+            currentScore += 1
         }
-        Log.e(TAG, "addResult: $currentScore")
-
+        Log.d(TAG, "addResult: score $currentScore")
         showNextQuesAns()
     }
 
     private fun showNextQuesAns() {
         if (counter.value >= questionList.size - 1) {
-            Toast.makeText(this, "Quiz Finished", Toast.LENGTH_SHORT).show()
+            val data =
+                intent.getStringExtra(IntentParams.SELECTED_CATEGORY)
             binding.progressBar.progress = 100
-            viewModel.storeResult(quizTypeEnum, currentScore)
-            this.finish()
+            binding.count.text = (counter.value + 1).toString()
+            viewModel.storeResult(
+                Gson().fromJson(
+                    data,
+                    QuizCategoryModel::class.java
+                ),
+                intent.getStringExtra(IntentParams.SELECTED_LEVEL) ?: QuizLevelEnum.EASY.name,
+                currentScore
+            )
+
+            showResult(currentScore)
+
         } else {
             counter.value++
             currentQuesAnsSet.value = questionList[counter.value]
             binding.progressBar.progress =
                 (((counter.value.toFloat()) / questionList.size.toFloat()) * 100F).toInt()
+            binding.count.text = counter.value.toString()
         }
+    }
+
+    private fun showResult(score: Int) {
+        selectModeDialog =
+            AlertDialog.Builder(this, R.style.CustomDialogTheme).apply {
+                setCancelable(false)
+                setView(
+                    LayoutInflater.from(context).inflate(R.layout.result_view_lyt, null)
+                        .apply {
+                            findViewById<TextView>(R.id.score).text = score.toString()
+                            findViewById<LottieAnimationView>(R.id.progress_circular).progress =
+                                ((score.toFloat()) / questionList.size.toFloat())
+                            findViewById<MaterialButton>(R.id.playAgain).setOnClickListener {
+                                selectModeDialog?.dismiss()
+                                this@QuizActivity.recreate()
+                            }
+                            findViewById<MaterialButton>(R.id.close).setOnClickListener {
+                                selectModeDialog?.dismiss()
+                                startActivity(Intent(this@QuizActivity, MainActivity::class.java))
+                            }
+                        })
+            }.create()
+        selectModeDialog?.apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            window?.let {
+                it.setGravity(Gravity.CENTER)
+                val layoutParams = WindowManager.LayoutParams()
+                layoutParams.copyFrom(it.attributes)
+                layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+                layoutParams.width = (resources.displayMetrics.widthPixels * 0.85).toInt()
+                it.attributes = layoutParams
+            }
+        }
+        selectModeDialog?.dismiss()
+        selectModeDialog?.show()
     }
 
     @Preview(showBackground = true)
@@ -290,4 +289,6 @@ class QuizActivity : AppCompatActivity() {
             SetView()
         }
     }
+
+
 }

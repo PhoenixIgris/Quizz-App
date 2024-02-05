@@ -4,6 +4,7 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.phoenixigris.quizz.repository.AuthCallback
 import com.phoenixigris.quizz.repository.UserRepository
 import com.phoenixigris.quizz.ui.login.ui.login.LoggedInUserView
 import com.phoenixigris.quizz.ui.login.ui.login.LoginResult
@@ -20,14 +21,8 @@ class RegisterViewModel @Inject constructor(private val userRepository: UserRepo
     private val _registerResult = MutableLiveData<LoginResult>()
     val registerResult: LiveData<LoginResult> = _registerResult
 
-    fun register(username: String, email: String, password: String) {
-        val result = userRepository.register(username,email, password)
-//        if (result is com.phoenixigris.quizz.ui.login.data.Result.Success) {
-//            _registerResult.value =
-//                LoginResult(success = LoggedInUserView(displayName = username))
-//        } else {
-//            _registerResult.value = LoginResult(error = 0)
-//        }
+    fun register(username: String, email: String, password: String, callback: AuthCallback) {
+        userRepository.register(username, email, password, callback)
     }
 
     fun registerDataChanged(username: String, email: String, password: String) {
@@ -53,4 +48,6 @@ class RegisterViewModel @Inject constructor(private val userRepository: UserRepo
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
     }
+
+
 }

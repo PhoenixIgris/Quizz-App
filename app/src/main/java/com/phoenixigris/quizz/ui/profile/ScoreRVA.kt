@@ -14,7 +14,8 @@ class ScoreRVA(private val mList: List<QuizModel>) :
 
         fun bindView(data: QuizModel, position: Int) {
             binding.scoreTypeTv.text = data.name
-            binding.scoreValueTv.text = "${data.score.easyScore}/20"
+            binding.scoreValueTv.text = "${data.score}/10"
+            binding.progress.progress = data.score * 10
         }
     }
 

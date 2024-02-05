@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Quizz" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary Colors -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">#512DA8</item>
+        <item name="colorPrimaryVariant">#4527A0</item> <!-- Variant of the primary color -->
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- Text color on primary background -->
+
+        <!-- Secondary Colors -->
+        <item name="colorSecondary">#26A69A</item>
+        <item name="colorSecondaryVariant">#009688</item> <!-- Variant of the secondary color -->
+        <item name="colorOnSecondary">#000000</item> <!-- Text color on secondary background -->
+        <item name="android:windowSplashScreenBackground">@color/primary_color</item>
+        <!-- Other Colors -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>
+</resources>

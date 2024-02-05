@@ -1,80 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:background="@color/primary_color"
+    android:fitsSystemWindows="true"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="16dp"
     tools:context=".ui.quiz.QuizActivity">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/act_quiz_progress_card"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/act_quiz_progress_lyt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_alignParentTop="true"
+        android:padding="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/act_quiz_progress_lyt"
-            android:padding="10dp">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/countCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_lyt"
+            android:backgroundTint="#9087E5"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:minHeight="10dp"
-                tools:progress="5"
-                android:layout_marginLeft="5dp"
-                android:progressBackgroundTint="@color/purple_100"
-                android:progressTint="@color/yellow_100"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
-                app:layout_constraintStart_toStartOf="@id/act_quiz_progress_lyt"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.8" />
-
-            <ImageView
-                android:id="@+id/imageView"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="5dp"
-                android:src="@drawable/ic_crown"
-                app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-                app:layout_constraintEnd_toStartOf="@+id/textView"
-                app:layout_constraintStart_toEndOf="@+id/progressBar"
-                app:layout_constraintTop_toTopOf="@+id/progressBar"
-                app:layout_constraintWidth_percent="0.1" />
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="2dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
-                android:gravity="center_horizontal"
-                android:text="0/8"
-                android:visibility="gone"
-                android:textColor="@color/gray_700"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView"
-                app:layout_constraintWidth_percent="0.1" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_person"
+                    app:tint="@color/white" />
 
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/act_quiz_container"
+                <TextView
+                    android:id="@+id/count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="1"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:minHeight="5dp"
+            android:progressBackgroundTint="#9087E5"
+            android:progressTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/countCard"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:progress="5" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_crown"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/progressBar"
+            app:layout_constraintTop_toTopOf="@+id/progressBar"
+            app:layout_constraintWidth_percent="0.1"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:gravity="center_horizontal"
+            android:text="0/8"
+            android:textColor="@color/gray_700"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            app:layout_constraintWidth_percent="0.1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/act_quiz_progress_card" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/act_quiz_progress_lyt"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="30dp">
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/act_quiz_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/act_quiz_progress_lyt" />
+    </com.google.android.material.card.MaterialCardView>
+</RelativeLayout>

@@ -1,60 +1,86 @@
 package com.phoenixigris.quizz.repository
 
-import com.phoenixigris.quizz.ui.login.data.Result
-import com.phoenixigris.quizz.ui.login.data.model.LoggedInUser
+import android.net.Uri
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.gson.Gson
+import com.phoenixigris.quizz.database.DataStoreHelper
+import com.phoenixigris.quizz.utils.Constants
 import javax.inject.Inject
 
 
-class UserRepository @Inject constructor(val dataSource: UserDataSource) {
+interface AuthCallback {
+    fun onSignUpSuccess()
+    fun onSignUpFailure(message: String)
+}
 
-    var user: String? = null
-        private set
+private const val TAG = "UserRepository"
 
-    val isLoggedIn: Boolean
-        get() = user != null
+class UserRepository @Inject constructor(
+    private val dataStoreHelper: DataStoreHelper
+) {
+    private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    init {
-
-        user = null
+    fun register(userName: String, email: String, password: String, callback: AuthCallback) {
+        try {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        callback.onSignUpFailure(
+                            task.exception?.message ?: "SignUp Unsuccessful, Please Try Again"
+                        )
+                    } else {
+                        setLoggedInUser(userName)
+                        callback.onSignUpSuccess()
+                    }
+                }
+        } catch (e: Throwable) {
+            return callback.onSignUpFailure("SignUp Unsuccessful, ${e.message}")
+        }
     }
 
     fun logout() {
-        user = null
-        dataSource.logout()
     }
 
-    fun register(username: String, email: String, password: String) {
-        val result = dataSource.register(email, password, object : AuthCallback {
-            override fun onSignUpSuccess() {
-                setLoggedInUser(username)
-            }
-
-            override fun onSignUpFailure(message: String) {
-
-            }
-
-        })
-        return result
+    fun login(email: String, password: String, callback: AuthCallback) {
+        try {
+            mAuth.signInWithEmailAndPassword(
+                email,
+                password
+            )
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.e(TAG, "login success ${task.result}")
+                        callback.onSignUpSuccess()
+                    } else {
+                        Log.e(TAG, "login failed ${task.exception}")
+                        callback.onSignUpFailure(task.exception?.message.toString())
+                    }
+                }
+        } catch (e: Throwable) {
+            return callback.onSignUpFailure("SignUp Unsuccessful, ${e.message}")
+        }
     }
 
-    private fun setLoggedInUser(loggedInUser: String) {
-        this.user = loggedInUser
+    suspend fun setLoggedInUserInfo() {
+        dataStoreHelper.saveBooleanToDatastore(Constants.IS_USER_LOGGED_IN to true)
+        dataStoreHelper.saveStringToDatastore(
+            Constants.LOGGED_IN_USER_DETAILS to Gson().toJson(
+                mAuth.currentUser
+            )
+        )
     }
 
-    fun login(
-        email: String,
-        password: String
-    ) {
-        val result = dataSource.login(email, password, object : AuthCallback {
-            override fun onSignUpSuccess() {
-                setLoggedInUser(email)
+
+    private fun setLoggedInUser(userName: String) {
+        val profileUpdates = UserProfileChangeRequest.Builder()
+            .setDisplayName(userName)
+            .build()
+        mAuth.currentUser?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d(TAG, "User profile updated.")
             }
-
-            override fun onSignUpFailure(message: String) {
-
-            }
-
-        })
-        return result
+        }
     }
 }

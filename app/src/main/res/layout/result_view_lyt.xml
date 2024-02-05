@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/semibold"
+            android:text="Result"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/progress_circular"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="circular_progress_bar.json"
+            app:lottie_speed="1"
+            tools:lottie_progress="0.7" />
+
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/semibold"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/progress_circular"
+            app:layout_constraintEnd_toEndOf="@+id/progress_circular"
+            app:layout_constraintStart_toStartOf="@+id/progress_circular"
+            app:layout_constraintTop_toTopOf="@+id/progress_circular"
+            tools:text="97.5" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/close"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primary_lighter"
+            android:elevation="0dp"
+            android:padding="15dp"
+            android:text="cancel"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toStartOf="@+id/playAgain"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progress_circular" />
+
+        <com.google.android.material.button.MaterialButton
+
+            android:id="@+id/playAgain"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:elevation="0dp"
+            android:padding="15dp"
+            android:text="Play Again"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/close"
+            app:layout_constraintTop_toBottomOf="@+id/progress_circular" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

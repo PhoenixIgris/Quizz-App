@@ -1,11 +1,12 @@
 package com.phoenixigris.quizz.ui.quiz
 
-import androidx.lifecycle.*
-import com.phoenixigris.quizz.utils.QuizModel
-import com.phoenixigris.quizz.utils.QuizTypeEnum
-import com.phoenixigris.quizz.utils.Score
-import com.phoenixigris.quizz.network.reponse.QuestionResponseItem
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.phoenixigris.quizz.repository.QuizRepository
+import com.phoenixigris.quizz.ui.home.model.QuizCategoryModel
+import com.phoenixigris.quizz.utils.QuizLevelEnum
+import com.phoenixigris.quizz.utils.QuizModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -15,53 +16,25 @@ import javax.inject.Inject
 class QuizActivityViewModel @Inject constructor(
     private val quizRepository: QuizRepository,
 ) : ViewModel() {
-
-
-    fun getQuestionList(quizType: QuizTypeEnum): LiveData<List<QuestionResponseItem>> {
-        when (quizType) {
-            QuizTypeEnum.LINUX -> {
-                return quizRepository.getLinuxQuestion().asLiveData()
-            }
-            QuizTypeEnum.DEVOPS -> {
-                return quizRepository.getDevOpsQuestionList().asLiveData()
-            }
-            QuizTypeEnum.DOCKER -> {
-                return quizRepository.getDockerQuestionList().asLiveData()
-            }
-            QuizTypeEnum.SQL -> {
-                return quizRepository.getSqlQuestionList().asLiveData()
-            }
-            QuizTypeEnum.CODE -> {
-                return quizRepository.getCodeQuestionList().asLiveData()
-            }
-            QuizTypeEnum.CMS -> {
-                return quizRepository.getCmsQuestionList().asLiveData()
-            }
-        }
-    }
-
-    fun storeResult(quizTypeEnum: QuizTypeEnum, score: Int) {
+    fun storeResult(category: QuizCategoryModel?, level: String, score: Int) {
         viewModelScope.launch {
             val newList = mutableListOf<QuizModel>()
-            quizRepository.getQuizStatusList().first().forEach {
-                if (quizTypeEnum == it.quizType) {
-                    newList.add(
-                        QuizModel(
-                            name = it.name,
-                            status = it.status,
-                            quizType = it.quizType,
-                            score = Score(
-                                easyScore = score,
-                                mediumScore = it.score.mediumScore,
-                                hardScore = it.score.hardScore
-                            ),
-                            drawableId = it.drawableId
-                        )
+            category?.let {
+                val list = quizRepository.getQuizStatusList().first()
+                    .filter {
+                        category.id != it.category.id
+                    }
+                newList.addAll(list)
+                newList.add(
+                    QuizModel(
+                        name = category.name,
+                        level = QuizLevelEnum.valueOf(level),
+                        score = score,
+                        category = category
                     )
-                } else {
-                    newList.add(it)
-                }
+                )
             }
+            Log.e("Debug", "storeResult: 7 $newList ")
             quizRepository.setQuizStatusList(newList)
         }
     }

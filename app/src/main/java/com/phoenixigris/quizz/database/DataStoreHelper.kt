@@ -1,19 +1,23 @@
 package com.phoenixigris.quizz.database
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.phoenixigris.quizz.utils.Constants
-import com.phoenixigris.quizz.utils.HelperClass.getQuizCategoryList
-import com.phoenixigris.quizz.utils.QuizModel
 import com.phoenixigris.quizz.network.reponse.QuestionResponse
+import com.phoenixigris.quizz.utils.Constants
+import com.phoenixigris.quizz.utils.QuizModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 const val DATA_STORE_NAME = "Quizz Datastore"
@@ -122,6 +126,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
 
     suspend fun setQuizStatusList(quizStatus: List<QuizModel>) {
         val quizStatusList = Gson().toJson(quizStatus)
+        Log.e("Debug", "setQuizStatusList: $quizStatusList ", )
         editStore(quizStatusKey, quizStatusList)
     }
 
@@ -130,7 +135,7 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
             Gson().fromJson(
                 store[quizStatusKey],
                 object : TypeToken<List<QuizModel>>() {}.type
-            ) ?: getQuizCategoryList()
+            ) ?: emptyList()
         }
     }
 
@@ -140,5 +145,46 @@ class DataStoreHelper @Inject constructor(@ApplicationContext appContext: Contex
         }
     }
 
+
+    suspend fun saveStringToDatastore(data: Pair<String, String>) =
+        withContext(Dispatchers.IO) {
+            Log.d("DataStoreHelper", "saveStringToDatastore: $data")
+            val prefKey = stringPreferencesKey(data.first)
+            dataStore.edit {
+                it[prefKey] = data.second
+            }
+        }
+
+    suspend fun readStringFromDatastore(key: String): String? =
+        withContext(Dispatchers.IO) {
+            val datastoreKey = stringPreferencesKey(key)
+            val value = dataStore.data.first()[datastoreKey]
+            Log.d("DataStoreHelper", "readStringFromDatastore: $key -> $value")
+            return@withContext value
+        }
+
+
+    suspend fun saveBooleanToDatastore(data: Pair<String, Boolean>) =
+        withContext(Dispatchers.IO) {
+            Log.d("DataStoreHelper", "saveBooleanToDatastore: $data")
+            val prefKey = booleanPreferencesKey(data.first)
+            dataStore.edit {
+                it[prefKey] = data.second
+            }
+        }
+
+    suspend fun readBooleanFromDatastore(key: String): Boolean =
+        withContext(Dispatchers.IO) {
+            val datastoreKey = booleanPreferencesKey(key)
+            val value = dataStore.data.first()[datastoreKey] ?: false
+            Log.d("DataStoreHelper", "readBooleanFromDatastore: $key -> $value")
+            return@withContext value
+        }
+
+    suspend fun clear() {
+        dataStore.edit {
+            it.clear()
+        }
+    }
 
 }
