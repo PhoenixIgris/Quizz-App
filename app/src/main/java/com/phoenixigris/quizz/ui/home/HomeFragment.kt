@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
@@ -52,7 +53,7 @@ class HomeFragment : Fragment() {
 
     private fun setProfile() {
         binding.homeActProfileIV.setOnClickListener {
-            startActivity(Intent(requireContext(), ProfileFragment::class.java))
+            findNavController().navigate(R.id.profileFragment)
         }
     }
 
