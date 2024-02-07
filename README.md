@@ -29,10 +29,10 @@ To run the app, you'll need to have Android Studio installed on your computer. O
 ## Screenshots
 
 ![Splash Screen](screenshots/splash.png)
-![Home Screen](screenshots/home.png)
-![Post List Screen](screenshots/quiz.png)
-![Create Post Screen](screenshots/result.png)
-![View Post Screen](screenshots/profile.png)
+![Home Screen](screenshots/home.jpeg)
+![Quiz Screen](screenshots/quiz.png)
+![Result Screen](screenshots/result.jpeg)
+![Profile Screen](screenshots/profile.png)
 
 ## Contributions
 Contributions to the Quiz Android App are welcome! If you find any bugs or issues, please create an issue on GitHub. If you'd like to contribute code, please fork the repository and create a pull request with your changes.
