@@ -16,7 +16,7 @@ To run the app, you'll need to have Android Studio installed on your computer. O
 - Navigate to the cloned repository and select the "Quiz Android App" folder.
 - Wait for Android Studio to build the project, then click on the "Run" button to launch the app on your emulator or connected device.
 
-##Dependencies
+## Dependencies
 
 * The app uses the following dependencies:
 
@@ -25,6 +25,14 @@ To run the app, you'll need to have Android Studio installed on your computer. O
 - Jetpack Compose: Used for the UI.
 - LiveData: Used for data observation.
 - Coroutines: Used for asynchronous programming.
+
+## Screenshots
+
+![Splash Screen](screenshots/splash.png)
+![Home Screen](screenshots/home.png)
+![Post List Screen](screenshots/quiz.png)
+![Create Post Screen](screenshots/result.png)
+![View Post Screen](screenshots/profile.png)
 
 ## Contributions
 Contributions to the Quiz Android App are welcome! If you find any bugs or issues, please create an issue on GitHub. If you'd like to contribute code, please fork the repository and create a pull request with your changes.
